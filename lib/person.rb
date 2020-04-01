@@ -14,6 +14,7 @@
 # The happiness and hygiene points should be able to change, however the maximum and minimum points for both happiness and hygiene should be 10 and 0 respectively
 # The amount in the bank account should also be able to change, though it has no max or min.
 
+require 'pry'
 class Person
     attr_reader :name, :bank_account, :happiness, :hygiene
 
@@ -31,7 +32,7 @@ class Person
     def get_paid(salary)
         @bank_account += salary
 
-        "It's all about the benjamins"
+        "all about the benjamins"
     end
 
     def happiness=(points)
@@ -55,8 +56,46 @@ class Person
     end
 
     def take_bath
-        @hygiene += 4
+        self.hygiene=(@hygiene + 4)
+        #binding.pry
 
         "♪ Rub-a-dub just relaxing in the tub ♫"
+    end
+
+    def happy?
+        @happiness > 7 ? true : false
+    end
+
+    def clean?
+        @hygiene > 7 ? true : false
+    end
+
+    def work_out
+        self.hygiene=(@hygiene - 3)
+        self.happiness=(@happiness + 2)
+        "♪ another one bites the dust ♫"
+    end
+
+    def call_friend(person)
+        self.happiness=(@happiness + 3)
+        person.happiness = person.happiness + 3
+        "Hi #{person.name}! It's #{@name}. How are you?"
+    end
+
+    def start_conversation(person, topic)
+        #if topic politcs...
+        return_string = ""
+        if topic == "politics"
+            return_string = "blah blah partisan blah lobbyist"
+            self.happiness = (@happiness - 2)
+            person.happiness = person.happiness - 2
+        elsif topic == "weather"
+            return_string = "blah blah sun blah rain"
+            self.happiness = (@happiness + 1)
+            person.happiness = person.happiness + 1
+        else
+        return_string = "blah blah blah blah blah"
+        end
+        return_string
     end
 end
